@@ -16,10 +16,10 @@ class OsuSkill(Skill):
     times = []
     
     def __init__(self):
+        super().__init__()
         self.strains = []
         self.times = []
         self.targetFCTime = 30 * 60 * 1000 # estimated time it takes us to FC (30 minutes)
-        self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
 
     def strainValueOf(self, currentObject: DifficultyHitObject):
         pass

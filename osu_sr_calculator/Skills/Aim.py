@@ -2,10 +2,12 @@ from ..Objects.osu.HitObjects.Spinner import Spinner
 from ..Objects.Vector2 import Vector2
 from ..Skills.OsuSkill import OsuSkill
 from ..Objects.osu.HitObjects.DifficultyHitObject import DifficultyHitObject
-from math import log, pi, sqrt, sin
+from math import log, pi, sqrt, sin, log2
 
 class Aim(OsuSkill):
-    def __init__(self):
+    def __init__(self): 
+        super().__init__()
+        
         self.currStrain = 1
         self.STARS_PER_DOUBLE = 1.1
         self.HISTORY_LENGTH = 2
@@ -17,8 +19,8 @@ class Aim(OsuSkill):
         self.FLOW_STRAIN_MULTIPLIER = 30.727
         self.SLIDER_STRAIN_MULTIPLIER = 75
         self.TOTAL_STRAIN_MULTIPLIER = .1675
-        
-        super().__init__()
+
+        self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
     
     def flowStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):

@@ -3,10 +3,12 @@ from ..Objects.osu.HitObjects.Spinner import Spinner
 from .OsuSkill import OsuSkill
 from ..Objects.osu.HitObjects.Slider import Slider
 from ..Objects.osu.HitObjects.DifficultyHitObject import DifficultyHitObject
-from math import pi, sin, sqrt
+from math import log2, sqrt
 
 class Tap(OsuSkill):
     def __init__(self):
+        super().__init__()
+
         self.STARS_PER_DOUBLE = 1.075
         self.HISTORY_LENGTH = 16
         self.DECAY_EXCESS_THRESHOLD = 500
@@ -19,10 +21,7 @@ class Tap(OsuSkill):
         
         self.currStrain = 1
         self.singleStrain = 1
-
-        self.strains = []
-        self.times = []
-        self.targetFCTime = 30 * 60 * 1000 # estimated time it takes us to FC (30 minutes) 
+        self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
 
     def isRatioEqual(self, ratio, a, b):
         return (a + 15 > ratio * b) and (a - 15 < ratio * b)
