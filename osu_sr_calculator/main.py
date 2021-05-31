@@ -54,7 +54,7 @@ def calculateStarRating(returnAllDifficultyValues = False, allCombinations = Fal
     if(not allCombinations):
         label = ''.join(mods) if len(mods) > 0 else "nomod"
         Beatmap = beatmapParser.parseBeatmap(Map, mods, verbose)
-        response = calculateNextModCombination(Beatmap, mods,  True, verbose)
+        response = calculateNextModCombination(Beatmap, mods)
         output[label] = response if returnAllDifficultyValues else response['total']
         return output
     else:
@@ -62,12 +62,12 @@ def calculateStarRating(returnAllDifficultyValues = False, allCombinations = Fal
         for combi in allModCombinations:
             label = ''.join(combi['mods']) if len(combi['mods']) > 0 else 'nomod'
             Beatmap = beatmapParser.parseBeatmap(Map, mods, verbose) if(combi['reParse'] == True or Beatmap is None) else Beatmap
-            response = calculateNextModCombination(Beatmap, combi['mods'], combi['reParse'], verbose)
+            response = calculateNextModCombination(Beatmap, combi['mods'])
             output[label] = response if returnAllDifficultyValues else response['total']
         
         return output
 
-def calculateNextModCombination(Beatmap, mods, reParse, verbose):
+def calculateNextModCombination(Beatmap, mods):
     timeRate = getTimeRate(mods)
     difficultyHitObjects = difficultyHitObjectCreator.convertToDifficultyHitObjects(Beatmap.HitObjects, timeRate)
     return starRatingCalculator.calculate(difficultyHitObjects, timeRate)
