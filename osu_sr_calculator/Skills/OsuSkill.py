@@ -77,7 +77,6 @@ class OsuSkill(Skill):
 
     def fcTimeSkillLevel(self, totalDifficulty):
         lengthEstimate = 0.4 * self.totalLength()
-        print(totalDifficulty)
         self.targetFCTime += 45 * max(0, self.expectedTargetTime(totalDifficulty) - 60000)
         # for every minute of straining time past 1 minute, add 45 mins to estimated time to FC.
         fcProb = lengthEstimate / self.targetFCTime
