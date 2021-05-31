@@ -1,24 +1,27 @@
 from math import e, log, log2
 from ..Objects.osu.HitObjects.DifficultyHitObject import DifficultyHitObject
-from ..Objects.osu.HitObjects.Spinner import Spinner
 from .Skill import Skill
 
 class OsuSkill(Skill):
-
-    strains = []
-    times = []
 
     TARGET_FC_PRECISION = 0.01
     DECAY_EXCESS_THRESHOLD = 500
     BASE_DECAY = 0.75
     STARS_PER_DOUBLE = 1.1
-    
-    DIFFICULTY_EXPONENT = 1.0 / log2(STARS_PER_DOUBLE)
 
     totalLength = lambda self: self.times[-1] - self.times[0]
     targetFCTime = 30 * 60 * 1000 # estimated time it takes us to FC (30 minutes) 
 
-    def strainValueOf(self, currentObject):
+    strains = []
+    times = []
+    
+    def __init__(self):
+        self.strains = []
+        self.times = []
+        self.targetFCTime = 30 * 60 * 1000 # estimated time it takes us to FC (30 minutes)
+        self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
+
+    def strainValueOf(self, currentObject: DifficultyHitObject):
         pass
 
     def computeDecay(self, baseDecay, deltaTime):

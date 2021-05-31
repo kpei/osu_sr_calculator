@@ -13,7 +13,7 @@ class DifficultyHitObjectCreator(object):
     currentObject = None
     timeRate = None
 
-    normalized_radius = 52
+    normalized_radius = 50
     TravelDistance = 0
     JumpDistance = 0
     Angle = 0

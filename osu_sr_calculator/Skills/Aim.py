@@ -1,24 +1,24 @@
 from ..Objects.osu.HitObjects.Spinner import Spinner
-from ..Objects.osu.HitObjects.HitObject import HitObject
 from ..Objects.Vector2 import Vector2
 from ..Skills.OsuSkill import OsuSkill
 from ..Objects.osu.HitObjects.DifficultyHitObject import DifficultyHitObject
 from math import log, pi, sqrt, sin
-from copy import deepcopy
 
 class Aim(OsuSkill):
-    STARS_PER_DOUBLE = 1.1
-    HISTORY_LENGTH = 2
-    DECAY_EXCESS_THRESHOLD = 500
-    BASE_DECAY = 0.75
+    def __init__(self):
+        self.currStrain = 1
+        self.STARS_PER_DOUBLE = 1.1
+        self.HISTORY_LENGTH = 2
+        self.DECAY_EXCESS_THRESHOLD = 500
+        self.BASE_DECAY = 0.75
 
-    DISTANCE_CONSTANT = 3.5
-    SNAP_STRAIN_MULTIPLIER = 23.727
-    FLOW_STRAIN_MULTIPLIER = 30.727
-    SLIDER_STRAIN_MULTIPLIER = 75
-    TOTAL_STRAIN_MULTIPLIER = .1675
-
-    currStrain = 1
+        self.DISTANCE_CONSTANT = 3.5
+        self.SNAP_STRAIN_MULTIPLIER = 23.727
+        self.FLOW_STRAIN_MULTIPLIER = 30.727
+        self.SLIDER_STRAIN_MULTIPLIER = 75
+        self.TOTAL_STRAIN_MULTIPLIER = .1675
+        
+        super().__init__()
     
     def flowStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):
@@ -65,7 +65,7 @@ class Aim(OsuSkill):
         if(isinstance(currentObject, Spinner)):
             return 0
         
-        osuCurrent = deepcopy(currentObject)
+        osuCurrent = currentObject
         strain = 0
         if(len(self.Previous) > 1):
             osuNextObject = currentObject
