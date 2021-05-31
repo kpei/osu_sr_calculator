@@ -32,7 +32,6 @@ class OsuSkill(Skill):
         self.addToHistory(currentObject)
 
     def calculateDifficultyValue(self):
-        print(self.strains)
         SR = sum(map(lambda s: s ** self.DIFFICULTY_EXPONENT, self.strains))
         return SR ** (1.0 / self.DIFFICULTY_EXPONENT)
 
