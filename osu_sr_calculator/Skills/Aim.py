@@ -10,7 +10,7 @@ class Aim(OsuSkill):
         
         self.currStrain = 1
         self.STARS_PER_DOUBLE = 1.1
-        self.HISTORY_LENGTH = 2
+        self.HistoryLength = 3
         self.DECAY_EXCESS_THRESHOLD = 500
         self.BASE_DECAY = 0.75
 

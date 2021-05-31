@@ -10,7 +10,7 @@ class Tap(OsuSkill):
         super().__init__()
 
         self.STARS_PER_DOUBLE = 1.075
-        self.HISTORY_LENGTH = 16
+        self.HistoryLength = 16
         self.DECAY_EXCESS_THRESHOLD = 500
         self.BASE_DECAY = 0.9
 
@@ -38,7 +38,7 @@ class Tap(OsuSkill):
             currDelta = self.Previous[i].StrainTime
 
             # idk just a guess at the name
-            cumulativeTimePerHistory = (float(i) / self.HISTORY_LENGTH) / sqrt(prevDelta * currDelta)
+            cumulativeTimePerHistory = (float(i) / self.HistoryLength) / sqrt(prevDelta * currDelta)
 
             if (self.isRatioEqual(1.5, prevDelta, currDelta) or self.isRatioEqual(1.5, currDelta, prevDelta)):
                 if(isinstance(self.Previous[i - 1], Slider) or isinstance(self.Previous[i], Slider)):
