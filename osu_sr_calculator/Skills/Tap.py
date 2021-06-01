@@ -49,7 +49,7 @@ class Tap(OsuSkill):
             if(firstDeltaSwitch):
                 if(self.isRatioEqual(1.0, prevDelta, currDelta)):
                     islandSize += 1 # island is still progressing, count size.
-                elif (prevDelta > currDelta * 1.25): # we're speeding up
+                else:
                     if (islandSize > 6):
                         islandTimes[6] = islandTimes[6] + 100.0 * cumulativeTimePerHistory
                         islandSizes[6] += 1
@@ -57,16 +57,10 @@ class Tap(OsuSkill):
                         islandTimes[islandSize] = islandTimes[islandSize] + 100.0 * cumulativeTimePerHistory
                         islandSizes[islandSize] += 1
                     
-                    islandSize = 0 # reset and count again, we sped up (usually this could only be if we did a 1/2 -> 1/3 -> 1/4) (or 1/1 -> 1/2 -> 1/4)
-                else: # we're not the same or speeding up, must be slowing down.
-                    if (islandSize > 6):
-                        islandTimes[6] = islandTimes[6] + 100.0 * cumulativeTimePerHistory
-                        islandSizes[6] += 1
+                    if (prevDelta > currDelta * 1.25): # we're speeding up
+                        islandSize = 0 # reset and count again, we sped up (usually this could only be if we did a 1/2 -> 1/3 -> 1/4) (or 1/1 -> 1/2 -> 1/4)
                     else:
-                        islandTimes[islandSize] = islandTimes[islandSize] + 100.0 * cumulativeTimePerHistory
-                        islandSizes[islandSize] += 1
-
-                    firstDeltaSwitch = False # stop counting island until next speed up.
+                        firstDeltaSwitch = False # stop counting island until next speed up.
             elif (prevDelta > 1.25 * currDelta): # we want to be speeding up
                 # Begin counting island until we slow again.
                 firstDeltaSwitch = True
