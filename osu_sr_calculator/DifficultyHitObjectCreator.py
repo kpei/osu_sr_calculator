@@ -72,8 +72,6 @@ class DifficultyHitObjectCreator(object):
             lastSlider = self.lastObject
             self.computeSliderCursorPosition(lastSlider)
             self.TravelDistance = lastSlider.LazyTravelDistance * scalingFactor
-        else:
-            self.TravelDistance = 0
 
         lastCursorPosition = self.getEndCursorPosition(self.lastObject)
 
