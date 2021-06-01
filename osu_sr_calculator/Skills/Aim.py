@@ -2,7 +2,7 @@ from ..Objects.osu.HitObjects.Spinner import Spinner
 from ..Objects.Vector2 import Vector2
 from ..Skills.OsuSkill import OsuSkill
 from ..Objects.osu.HitObjects.DifficultyHitObject import DifficultyHitObject
-from math import log, pi, sqrt, sin, log2
+from math import log, pi, sqrt, log2
 
 class Aim(OsuSkill):
     def __init__(self): 

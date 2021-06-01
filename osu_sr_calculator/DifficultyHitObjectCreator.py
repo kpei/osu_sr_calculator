@@ -77,6 +77,9 @@ class DifficultyHitObjectCreator(object):
         if(not isinstance(self.currentObject, Spinner)):
             self.DistanceVector = self.currentObject.StackedPosition.scale(scalingFactor).subtract(lastCursorPosition.scale(scalingFactor))
             self.JumpDistance = self.DistanceVector.length()
+        else:
+            self.DistanceVector = Vector2(0.0, 0.0)
+            self.JumpDistance = 0
         
         if(self.lastLastObject is not None):
             lastLastCursorPosition = self.getEndCursorPosition(self.lastLastObject)
