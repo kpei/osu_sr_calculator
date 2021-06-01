@@ -84,8 +84,8 @@ class Aim(OsuSkill):
             sliderStrain = self.sliderStrainOf(osuPrevObject, osuCurrObject, osuNextObject)
 
             self.currStrain *= self.computeDecay(self.BASE_DECAY, osuCurrent.StrainTime)
-            self.currStrain += snapStrain * self.SNAP_STRAIN_MULTIPLIER * 0
-            self.currStrain += flowStrain * self.FLOW_STRAIN_MULTIPLIER * 0
+            self.currStrain += snapStrain * self.SNAP_STRAIN_MULTIPLIER
+            self.currStrain += flowStrain * self.FLOW_STRAIN_MULTIPLIER
             self.currStrain += sliderStrain * self.SLIDER_STRAIN_MULTIPLIER
 
             strain = self.TOTAL_STRAIN_MULTIPLIER * self.currStrain
