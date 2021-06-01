@@ -15,8 +15,11 @@ class DifficultyHitObject(HitObject):
     SnapProbability = 1.0 - FlowProbability
     DistanceVector = None
 
-    def __init__(self, currentObject, lastObject, lastLastObject, travelDistance, jumpDistance, angle, flowProbability, distanceVector, deltaTime, strainTime):
+    BaseObjectType = None
+
+    def __init__(self, baseObjectType, currentObject, lastObject, lastLastObject, travelDistance, jumpDistance, angle, flowProbability, distanceVector, deltaTime, strainTime):
         super().__init__(currentObject.Position, currentObject.StartTime, radius=currentObject.Radius)
+        self.BaseObjectType = baseObjectType
         self.TravelDistance = travelDistance
         self.JumpDistance = jumpDistance
         self.FlowProbability = flowProbability

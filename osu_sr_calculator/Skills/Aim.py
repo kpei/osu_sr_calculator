@@ -64,7 +64,7 @@ class Aim(OsuSkill):
         return previousObject.TravelDistance / previousObject.StrainTime
 
     def strainValueOf(self, currentObject: DifficultyHitObject):
-        if(isinstance(currentObject, Spinner)):
+        if(currentObject.BaseObjectType == Spinner):
             return 0
         
         osuCurrent = currentObject
