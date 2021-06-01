@@ -52,6 +52,7 @@ class DifficultyHitObjectCreator(object):
         return DifficultyHitObject(type(self.currentObject), self.currentObject, self.lastObject, self.lastLastObject, self.TravelDistance, self.JumpDistance, self.Angle, self.FlowProbability, self.DistanceVector, self.DeltaTime, self.StrainTime)
 
     def setDistances(self):
+        self.DistanceVector = Vector2(0.0, 0.0)
         self.TravelDistance = 0
         self.JumpDistance = 0
         self.Angle = 0
@@ -71,15 +72,14 @@ class DifficultyHitObjectCreator(object):
             lastSlider = self.lastObject
             self.computeSliderCursorPosition(lastSlider)
             self.TravelDistance = lastSlider.LazyTravelDistance * scalingFactor
+        else:
+            self.TravelDistance = 0
 
         lastCursorPosition = self.getEndCursorPosition(self.lastObject)
 
         if(not isinstance(self.currentObject, Spinner)):
             self.DistanceVector = self.currentObject.StackedPosition.scale(scalingFactor).subtract(lastCursorPosition.scale(scalingFactor))
             self.JumpDistance = self.DistanceVector.length()
-        else:
-            self.DistanceVector = Vector2(0.0, 0.0)
-            self.JumpDistance = 0
         
         if(self.lastLastObject is not None):
             lastLastCursorPosition = self.getEndCursorPosition(self.lastLastObject)
