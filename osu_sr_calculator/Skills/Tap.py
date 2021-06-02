@@ -41,7 +41,7 @@ class Tap(OsuSkill):
             cumulativeTimePerHistory = (float(i) / self.HistoryLength) / sqrt(prevDelta * currDelta)
 
             if (self.isRatioEqual(1.5, prevDelta, currDelta) or self.isRatioEqual(1.5, currDelta, prevDelta)):
-                if(isinstance(self.Previous[i - 1], Slider) or isinstance(self.Previous[i], Slider)):
+                if( (self.Previous[i - 1].BaseObjectType == Slider) or (self.Previous[i].BaseObjectType == Slider)):
                     specialTransitionCount += 50.0 * cumulativeTimePerHistory
                 else:
                     specialTransitionCount += 250.0 * cumulativeTimePerHistory
