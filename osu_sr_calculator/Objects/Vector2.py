@@ -6,7 +6,13 @@ class Vector2(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-    
+
+    def __str__(self):
+        return f"<Vector2 ({self.x}, {self.y})>"
+
+    def __repr__(self):
+        return self.__str__()
+
     def add(self, vector):
         return Vector2(self.x + vector.x, self.y + vector.y)
     
@@ -22,7 +28,7 @@ class Vector2(object):
         return Vector2(self.x / div_factor, self.y / div_factor)
 
     def dot(self, vector):
-        return self.x * vector.x + self.y + vector.y
+        return self.x * vector.x + self.y * vector.y
 
     def length(self):
         return sqrt((self.x * self.x) + (self.y * self.y))
