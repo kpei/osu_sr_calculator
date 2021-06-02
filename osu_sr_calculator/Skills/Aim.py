@@ -46,7 +46,7 @@ class Aim(OsuSkill):
     # mans using fitt's Law in a circle game sheeeeesh
     def snapScaling(self, distance):
         distanceDiff: float = distance - self.DISTANCE_CONSTANT
-        return 1.0 if (distanceDiff < 0) else ( (self.DISTANCE_CONSTANT + distanceDiff * (log(1 + distanceDiff / sqrt(2)) / log(2)) / distanceDiff) / distance )
+        return 1.0 if (distanceDiff <= 0) else ( (self.DISTANCE_CONSTANT + distanceDiff * (log(1 + distanceDiff / sqrt(2)) / log(2)) / distanceDiff) / distance )
 
     def snapStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):
