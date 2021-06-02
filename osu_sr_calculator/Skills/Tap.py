@@ -24,7 +24,7 @@ class Tap(OsuSkill):
         self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
 
     def isRatioEqual(self, ratio, a, b):
-        return (a + 15 > ratio * b) and (a - 15 < ratio * b)
+        return a + 15 > ratio * b and a - 15 < ratio * b
 
     def calculateRhythmDifficulty(self):
         islandSizes = [0.0]*7
@@ -56,7 +56,7 @@ class Tap(OsuSkill):
                     else:
                         islandTimes[islandSize] = islandTimes[islandSize] + 100.0 * cumulativeTimePerHistory
                         islandSizes[islandSize] += 1
-                    
+
                     if (prevDelta > currDelta * 1.25): # we're speeding up
                         islandSize = 0 # reset and count again, we sped up (usually this could only be if we did a 1/2 -> 1/3 -> 1/4) (or 1/1 -> 1/2 -> 1/4)
                     else:
@@ -74,7 +74,7 @@ class Tap(OsuSkill):
         return sqrt(4.0 + rhythmComplexitySum * self.RHYTHM_MULTIPLIER) / 2
 
     def strainValueOf(self, currentObject: DifficultyHitObject):
-        if (currentObject is Spinner or len(self.Previous) == 0):
+        if (currentObject.BaseObjectType == Spinner or len(self.Previous) == 0):
             return 0
         
         osuCurrent = currentObject
@@ -84,7 +84,10 @@ class Tap(OsuSkill):
         rhythmComplexity = self.calculateRhythmDifficulty()
 
         # scale tap value for high BPM (above 200).
-        strainValue = 0.25 + (self.STRAIN_TIME_BUFF_RANGE / avgDeltaTime) ** (2 if (self.STRAIN_TIME_BUFF_RANGE / avgDeltaTime > 1) else 1)
+        if (self.STRAIN_TIME_BUFF_RANGE / avgDeltaTime > 1):
+            strainValue = 0.25 + (self.STRAIN_TIME_BUFF_RANGE / avgDeltaTime) ** 2
+        else:
+            strainValue = 0.25 + self.STRAIN_TIME_BUFF_RANGE / avgDeltaTime
 
         self.singleStrain *= self.computeDecay(self.BASE_DECAY, osuCurrent.StrainTime)
         self.singleStrain += (0.5 + osuCurrent.SnapProbability) * strainValue * self.SINGLE_MULTIPLIER

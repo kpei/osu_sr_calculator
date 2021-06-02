@@ -12,5 +12,5 @@ class Skill(ABC):
 
     def addToHistory(self, currentObject):
         self.Previous.insert(0, currentObject)
-        if(len(self.Previous) >= self.HistoryLength):
+        while(len(self.Previous) > self.HistoryLength):
             self.Previous.pop()
