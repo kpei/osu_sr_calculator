@@ -88,6 +88,7 @@ class OsuSkill(Skill):
         for _ in range(5):
             fcTime = self.expectedFCTime(skillLevel)
             lengthEstimate = fcTime * fcProb
+            fcProb = lengthEstimate / self.targetFCTime
             skillLevel = self.skillLevel(fcProb, totalDifficulty)
             # Convergence check
             if( abs(fcTime - self.targetFCTime) < self.TARGET_FC_PRECISION * self.targetFCTime ):
