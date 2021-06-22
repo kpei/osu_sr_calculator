@@ -54,7 +54,7 @@ class Aim(OsuSkill):
         distanceDiff: float = distance - self.DISTANCE_CONSTANT
         return 1.0 if (distanceDiff <= 0) else ( (self.DISTANCE_CONSTANT + distanceDiff * (log(1 + distanceDiff / sqrt(2)) / log(2)) / distanceDiff) / distance )
 
-    def snapStrainOf(self, previousObjectStrainTime: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
+    def snapStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):
         currVector = currVector.scale(self.snapScaling(currentObject.JumpDistance / 100.0))
         prevVector = prevVector.scale(self.snapScaling(previousObject.JumpDistance / 100.0))
