@@ -66,10 +66,15 @@ class Tap(OsuSkill):
                 firstDeltaSwitch = True
                 islandSize = 0
 
+        self.islandSizesCopy = islandSizes
+        self.islandTimesCopy = islandTimes
+
         rhythmComplexitySum = 0.0
         for (size, time) in zip(islandSizes, islandTimes):
             rhythmComplexitySum += time / size ** 0.5 if size != 0 else 0 # sum the total amount of rhythm variance, penalizing for repeated island sizes.
         rhythmComplexitySum += specialTransitionCount
+
+        self.rhythmComplexity = rhythmComplexitySum
 
         return sqrt(4.0 + rhythmComplexitySum * self.RHYTHM_MULTIPLIER) / 2
 
