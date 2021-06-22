@@ -23,6 +23,10 @@ class Tap(OsuSkill):
         self.singleStrain = 1
         self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
 
+        self.rhythmComplexity = 0.0
+        self.islandSizesCopy = []
+        self.islandTimesCopy = []
+
     def isRatioEqual(self, ratio, a, b):
         return a + 15 > ratio * b and a - 15 < ratio * b
 
