@@ -21,22 +21,28 @@ class Aim(OsuSkill):
         self.TOTAL_STRAIN_MULTIPLIER = .1675
 
         self.DIFFICULTY_EXPONENT = 1.0 / log2(self.STARS_PER_DOUBLE)
+
+        self.prevAngularMomentumChange = 0.0
+        self.nextAngularMomentumChange = 0.0
+        self.momentumChange = 0.0
+        self.angularMomentumChange = 0.0
+        self.observedDistance = 0.0
     
     def flowStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):
         observedDistance: Vector2 = currVector.subtract(prevVector.scale(0.1))
 
-        prevAngularMomentumChange = abs(currentObject.Angle * currVector.length() - previousObject.Angle * prevVector.length())
-        nextAngularMomentumChange = abs(currentObject.Angle * currVector.length() - nextObject.Angle * nextVector.length())
+        self.prevAngularMomentumChange = abs(currentObject.Angle * currVector.length() - previousObject.Angle * prevVector.length())
+        self.nextAngularMomentumChange = abs(currentObject.Angle * currVector.length() - nextObject.Angle * nextVector.length())
 
-        angularMomentumChange = sqrt( min(currVector.length(), prevVector.length()) * abs(nextAngularMomentumChange - prevAngularMomentumChange) / (2 * pi) )
+        self.angularMomentumChange = sqrt( min(currVector.length(), prevVector.length()) * abs(self.nextAngularMomentumChange - self.prevAngularMomentumChange) / (2 * pi) )
         # buff for changes in angular momentum, but only if the momentum change doesnt equal the previous.
 
-        momentumChange = sqrt( max(0, prevVector.length() - currVector.length()) * min(currVector.length(), prevVector.length()) )
+        self.momentumChange = sqrt( max(0, prevVector.length() - currVector.length()) * min(currVector.length(), prevVector.length()) )
         # reward for accelerative changes in momentum
 
         strain = currentObject.FlowProbability * \
-            ( observedDistance.length() + max( momentumChange * (0.5 + 0.5 * previousObject.FlowProbability), angularMomentumChange * previousObject.FlowProbability ) )
+            ( observedDistance.length() + max( self.momentumChange * (0.5 + 0.5 * previousObject.FlowProbability), self.angularMomentumChange * previousObject.FlowProbability ) )
 
         strain *= min( currentObject.StrainTime / (currentObject.StrainTime - 10.0), previousObject.StrainTime / (previousObject.StrainTime - 10.0) )
         # buff high BPM slightly.
@@ -48,14 +54,14 @@ class Aim(OsuSkill):
         distanceDiff: float = distance - self.DISTANCE_CONSTANT
         return 1.0 if (distanceDiff <= 0) else ( (self.DISTANCE_CONSTANT + distanceDiff * (log(1 + distanceDiff / sqrt(2)) / log(2)) / distanceDiff) / distance )
 
-    def snapStrainOf(self, previousObject: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
+    def snapStrainOf(self, previousObjectStrainTime: DifficultyHitObject, currentObject: DifficultyHitObject, nextObject: DifficultyHitObject, 
         prevVector: Vector2, currVector: Vector2, nextVector: Vector2):
         currVector = currVector.scale(self.snapScaling(currentObject.JumpDistance / 100.0))
         prevVector = prevVector.scale(self.snapScaling(previousObject.JumpDistance / 100.0))
 
-        observedDistance = currVector.add(prevVector.scale(0.35))
+        self.observedDistance = currVector.add(prevVector.scale(0.35))
 
-        strain = observedDistance.length() * currentObject.SnapProbability
+        strain = self.observedDistance.length() * currentObject.SnapProbability
         strain *= min( currentObject.StrainTime / (currentObject.StrainTime - 20.0), previousObject.StrainTime / (previousObject.StrainTime - 20.0) )
 
         return strain
