@@ -21,6 +21,7 @@ class DifficultyHitObjectCreator(object):
     StrainTime = 0
 
     FlowProbability = 0
+    Flow = 0
     DistanceVector = Vector2(0.0, 0.0)
 
     def clamp(self, value, _min, _max):
@@ -144,4 +145,5 @@ class DifficultyHitObjectCreator(object):
         distanceOffset = distance ** 1.7 / 325
 
         flow = self.clamp((deltaTime - 126.0 + distanceOffset + angleOffset), -1e2, 1e2)
+        self.Flow = flow
         self.FlowProbability = 1.0 / (1.0 + e ** flow)
