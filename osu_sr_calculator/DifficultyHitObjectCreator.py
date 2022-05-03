@@ -50,7 +50,7 @@ class DifficultyHitObjectCreator(object):
         self.setTimingValues()
         self.calculateFlowProbability()
 
-        return DifficultyHitObject(type(self.currentObject), self.currentObject, self.lastObject, self.lastLastObject, self.TravelDistance, self.JumpDistance, self.Angle, self.FlowProbability, self.DistanceVector, self.DeltaTime, self.StrainTime)
+        return DifficultyHitObject(type(self.currentObject), self.currentObject, self.lastObject, self.lastLastObject, self.TravelDistance, self.JumpDistance, self.Angle, self.Flow, self.FlowProbability, self.DistanceVector, self.DeltaTime, self.StrainTime)
 
     def setDistances(self):
         self.DistanceVector = Vector2(0.0, 0.0)
