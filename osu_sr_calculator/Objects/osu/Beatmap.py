@@ -25,6 +25,8 @@ class Beatmap(object):
     # }>;
     DifficultyTimingPoints = []
 
+    Breaks = []
+
     Version = 0
     StackLeniency = 0
 
@@ -41,3 +43,4 @@ class Beatmap(object):
         self.HitObjects = []
         self.TimingPoints = []
         self.DifficultyTimingPoints = []
+        self.Breaks = []

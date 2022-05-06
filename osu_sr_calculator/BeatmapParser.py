@@ -40,6 +40,18 @@ class BeatmapParser(object):
                 key, value = map(lambda v: v.strip(), line.split(':'))
                 if(key == 'StackLeniency'):
                     self.beatmap.StackLeniency = float(value)
+
+            elif(section == 'Events'):
+                split = line.split(',')
+                try:
+                    eventType = int(split[0])
+                    if (eventType == 2): # breaks
+                        self.beatmap.Breaks.append({
+                            "startTime": int(split[1]),
+                            "endTime": int(split[2])
+                        })
+                except:
+                    warn(f'Error occurred while parsing events section, skipping', Warning);
             
             elif(section == 'Difficulty'):
                 key, value = map(lambda v: v.strip(), line.split(':'))
